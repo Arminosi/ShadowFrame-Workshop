@@ -111,6 +111,8 @@ const App: React.FC = () => {
     } else {
       setLang('en');
     }
+    // Ensure the page tab always shows the bilingual title requested
+    document.title = '影格工坊 | ShadowFrame Workshop';
   }, []);
 
   const text = UI_TEXT[lang];

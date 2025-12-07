@@ -1,0 +1,73 @@
+/* Global style overrides and themed scrollbar for ShadowFrame Workshop */
+:root{
+  --sf-bg:#020617;
+  --sf-foreground: #f8fafc; /* body text color used in index.html */
+  --sf-accent-1:#7c3aed; /* purple-600 (kept for other accents) */
+  --sf-accent-2:#6366f1; /* indigo-500 */
+  --sf-track: rgba(255,255,255,0.018); /* slightly lighter track for contrast */
+  --sf-thumb-border: rgba(255,255,255,0.02);
+  /* Scrollbar-specific colors (deep black) */
+  --sf-scroll-thumb: #0b0b0f; /* deep black */
+  --sf-scroll-thumb-hover: #19191c; /* a hair lighter on hover */
+}
+
+/* Ensure base body background/text matches theme if not already set */
+html,body{
+  height:100%;
+  background-color: var(--sf-bg);
+  color: var(--sf-foreground);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Smooth-scroll for anchor navigation (optional but fits polished UI) */
+html{scroll-behavior:smooth;}
+
+/* Global Scrollbar Styling (WebKit browsers: Chrome, Edge, Safari) */
+*::-webkit-scrollbar{width:12px;height:12px}
+*::-webkit-scrollbar-track{
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
+  border-radius:9999px; /* pill-shaped track */
+  margin: 8px 0; /* keep thumb inset from corners */
+}
+*::-webkit-scrollbar-thumb{
+  /* Use a deep black thumb with a very subtle gradient to avoid flatness */
+  background: linear-gradient(180deg,var(--sf-scroll-thumb),var(--sf-scroll-thumb-hover));
+  border-radius:9999px;
+  border: 3px solid transparent; /* adds padding and blends with track */
+  background-clip: padding-box; /* prevents border from obscuring the gradient */
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+}
+*::-webkit-scrollbar-thumb:hover{
+  /* Slightly lighten on hover and add a subtle dark glow for depth */
+  filter:brightness(1.06);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
+*::-webkit-scrollbar-corner{background:transparent}
+
+/* Firefox fallback: thin track and colored thumb */
+/* Firefox fallback: thumb and track for dark themed deep black thumb */
+*{scrollbar-width:thin;scrollbar-color: var(--sf-scroll-thumb) var(--sf-track);}
+
+/* Utility class for elements that should adopt the themed scrollbar even if default isn't enough */
+.sf-scrollbar{
+  scrollbar-width:thin;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce){
+  *::-webkit-scrollbar-thumb{transition:none}
+}
+
+/* Optional: make scrollbars less intrusive when not hovering on desktop - small reflow trick */
+@media (hover: hover) and (pointer: fine){
+  *::-webkit-scrollbar{
+    width:10px;
+  }
+  body:not(:hover) *::-webkit-scrollbar-thumb{
+    opacity:0.92;
+  }
+}
+
+/* Add an inner subtle outline for focusable scroller elements - helps keyboard users */
+*:focus{outline-color: rgba(99,102,241,0.45); outline-offset: 2px;}
