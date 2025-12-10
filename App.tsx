@@ -3,6 +3,7 @@ import { TOOLS } from './constants';
 import ToolCard from './components/ToolCard';
 import { Language } from './types';
 import { GithubIcon } from './components/Icons';
+import InteractiveBackground from './components/InteractiveBackground';
 
 const UI_TEXT = {
   en: {
@@ -73,22 +74,22 @@ const GradientTitle = ({ text, lang, hoveredToolId }: { text: string, lang: stri
          </span>
       </span>
 
-      {/* Default Gradient Layer */}
+      {/* Default Gradient Layer - faster fade in when returning to default */}
       <span 
         aria-hidden="true" 
-        className={`absolute inset-0 ${baseClasses} bg-gradient-to-r ${defaultGradient} transition-opacity duration-700 ease-in-out ${hoveredToolId === null ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 ${baseClasses} bg-gradient-to-r ${defaultGradient} ${hoveredToolId === null ? 'opacity-100 transition-opacity duration-300 ease-out' : 'opacity-0 transition-opacity duration-500 ease-in'}`}
       >
         <span key={lang} className="animate-fade-in block">
           {text}
         </span>
       </span>
 
-      {/* Tool-specific Gradient Layers */}
+      {/* Tool-specific Gradient Layers - faster fade in when hovering */}
       {TOOLS.map((tool) => (
         <span
           key={tool.id}
           aria-hidden="true"
-          className={`absolute inset-0 ${baseClasses} bg-gradient-to-r ${tool.titleGradient} transition-opacity duration-700 ease-in-out ${hoveredToolId === tool.id ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 ${baseClasses} bg-gradient-to-r ${tool.titleGradient} ${hoveredToolId === tool.id ? 'opacity-100 transition-opacity duration-300 ease-out' : 'opacity-0 transition-opacity duration-500 ease-in'}`}
         >
           <span key={lang} className="animate-fade-in block">
             {text}
@@ -118,16 +119,19 @@ const App: React.FC = () => {
   const text = UI_TEXT[lang];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30 font-sans">
+    <div className="min-h-screen h-full w-full bg-slate-950 text-slate-200 selection:bg-indigo-500/30 font-sans overflow-auto flex flex-col">
+      
+      {/* Interactive Particle Background */}
+      <InteractiveBackground hoveredToolId={hoveredToolId} />
       
       {/* Background Mesh/Grid pattern for texture */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-transparent to-slate-950/50"></div>
       </div>
 
       {/* Animated Language Switcher */}
-      <div className="fixed top-6 right-6 z-50 flex items-center p-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full shadow-lg">
+      <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex items-center p-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full shadow-lg">
         {/* The Sliding Background Pill */}
         <div 
           className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-indigo-500/90 rounded-full shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
@@ -156,11 +160,14 @@ const App: React.FC = () => {
         </button>
       </div>
 
-      <main className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 lg:px-8">
+      <main className="relative z-10 flex flex-col items-center justify-between w-full px-4 md:px-6 lg:px-8 py-6 md:py-8 min-h-screen">
+        
+        {/* Spacer to push content down slightly */}
+        <div className="flex-shrink-0 h-[2vh] md:h-[4vh]"></div>
         
         {/* Header Section */}
-        <header className="flex flex-col items-center text-center mb-8 md:mb-24 space-y-4 md:space-y-6 animate-fade-in-down">
-          <div className="inline-block px-4 py-1.5 mb-2 md:mb-4 text-[10px] md:text-xs font-bold tracking-widest text-indigo-400 uppercase bg-indigo-500/10 rounded-full border border-indigo-500/20 backdrop-blur-md shadow-[0_0_15px_rgba(99,102,241,0.3)]">
+        <header className="flex flex-col items-center text-center space-y-2 md:space-y-3 animate-fade-in-down flex-shrink-0">
+          <div className="inline-block px-4 py-1.5 text-[10px] md:text-xs font-bold tracking-widest text-indigo-400 uppercase bg-indigo-500/10 rounded-full border border-indigo-500/20 backdrop-blur-md shadow-[0_0_15px_rgba(99,102,241,0.3)]">
             <span key={lang} className="animate-fade-in inline-block">
               {text.badge}
             </span>
@@ -176,8 +183,8 @@ const App: React.FC = () => {
           </p>
         </header>
 
-        {/* Cards Grid - Reduced gap on mobile to fit 3 cards in view */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8 w-full max-w-lg md:max-w-none">
+        {/* Cards Grid - with overflow handling */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full max-w-lg md:max-w-5xl mt-6 md:mt-8 flex-shrink-0 mb-auto">
           {TOOLS.map((tool) => (
             <ToolCard 
               key={tool.id} 
@@ -189,7 +196,7 @@ const App: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <footer className="mt-12 md:mt-24 text-slate-600 text-xs md:text-sm font-medium">
+        <footer className="text-slate-600 text-xs md:text-sm font-medium pb-4 md:pb-6 flex-shrink-0">
           <div className="flex items-center justify-center">
             <span key={lang} className="animate-fade-in inline-block">
               {text.footer}
