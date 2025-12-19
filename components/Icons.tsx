@@ -210,6 +210,57 @@ export const CheckIcon: React.FC<IconProps> = ({ className }) => (
   </svg>
 );
 
+export const ImageEditIcon: React.FC<IconProps> = ({ className }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="1.5" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    {/* 
+        Image Edit Animation:
+        Default state: A photo frame with mountain/sun scene.
+        Hover state: Editing overlay appears with crop corners and adjustment sliders.
+    */}
+
+    {/* Main Photo Frame */}
+    <rect 
+      x="4" y="4" width="16" height="16" rx="2"
+      className="stroke-current transition-all duration-500"
+    />
+
+    {/* Photo Content - Mountain and Sun */}
+    <g className="transition-all duration-500 group-hover:opacity-60 group-hover:scale-75 origin-center" style={{ transformBox: 'fill-box' }}>
+      {/* Sun/Circle */}
+      <circle cx="9" cy="9" r="2" className="fill-current opacity-40" />
+      
+      {/* Mountain - simple triangle peaks */}
+      <path 
+        d="M4 16 L8 10 L12 14 L16 8 L20 16" 
+        className="fill-current opacity-30 stroke-none"
+      />
+      <path 
+        d="M4 16 L8 10 L12 14 L16 8 L20 16" 
+        className="stroke-current opacity-50"
+        strokeWidth="1"
+        fill="none"
+      />
+    </g>
+
+    {/* Edit Overlay - Crop Corners (appear on hover) */}
+    <g className="opacity-0 group-hover:opacity-100 transition-all duration-500">
+      <path d="M6 8V6h2" className="stroke-current" strokeWidth="2" />
+      <path d="M18 6h-2M18 6v2" className="stroke-current" strokeWidth="2" />
+      <path d="M6 18v-2M6 18h2" className="stroke-current" strokeWidth="2" />
+      <path d="M18 18h-2M18 18v-2" className="stroke-current" strokeWidth="2" />
+    </g>
+  </svg>
+);
+
 export const GithubIcon: React.FC<IconProps> = ({ className }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 

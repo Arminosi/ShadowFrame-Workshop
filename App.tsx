@@ -59,7 +59,7 @@ const GithubLink = () => {
 const GradientTitle = ({ text, lang, hoveredToolId }: { text: string, lang: string, hoveredToolId: string | null }) => {
   // Base classes for all title layers
   // Added select-none to prevent weird text selection behavior with overlapping layers
-  const baseClasses = "text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight drop-shadow-2xl text-transparent bg-clip-text bg-[length:200%_auto] animate-flow-gradient-text pb-2 select-none";
+  const baseClasses = "text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight drop-shadow-2xl text-transparent bg-clip-text bg-[length:200%_auto] animate-flow-gradient-text pb-2 select-none transition-opacity duration-300";
   const defaultGradient = 'from-indigo-300 via-purple-300 to-indigo-300';
 
   return (
@@ -69,19 +69,15 @@ const GradientTitle = ({ text, lang, hoveredToolId }: { text: string, lang: stri
       
       {/* Spacer for layout dimensions */}
       <span aria-hidden="true" className={`${baseClasses} opacity-0 block`}>
-         <span key={lang} className="animate-fade-in block">
-           {text}
-         </span>
+        {text}
       </span>
 
       {/* Default Gradient Layer - faster fade in when returning to default */}
       <span 
         aria-hidden="true" 
-        className={`absolute inset-0 ${baseClasses} bg-gradient-to-r ${defaultGradient} ${hoveredToolId === null ? 'opacity-100 transition-opacity duration-300 ease-out' : 'opacity-0 transition-opacity duration-500 ease-in'}`}
+        className={`absolute inset-0 ${baseClasses} bg-gradient-to-r ${defaultGradient} ${hoveredToolId === null ? 'opacity-100' : 'opacity-0'}`}
       >
-        <span key={lang} className="animate-fade-in block">
-          {text}
-        </span>
+        {text}
       </span>
 
       {/* Tool-specific Gradient Layers - faster fade in when hovering */}
@@ -89,11 +85,9 @@ const GradientTitle = ({ text, lang, hoveredToolId }: { text: string, lang: stri
         <span
           key={tool.id}
           aria-hidden="true"
-          className={`absolute inset-0 ${baseClasses} bg-gradient-to-r ${tool.titleGradient} ${hoveredToolId === tool.id ? 'opacity-100 transition-opacity duration-300 ease-out' : 'opacity-0 transition-opacity duration-500 ease-in'}`}
+          className={`absolute inset-0 ${baseClasses} bg-gradient-to-r ${tool.titleGradient} ${hoveredToolId === tool.id ? 'opacity-100' : 'opacity-0'}`}
         >
-          <span key={lang} className="animate-fade-in block">
-            {text}
-          </span>
+          {text}
         </span>
       ))}
     </h1>
@@ -184,7 +178,7 @@ const App: React.FC = () => {
         </header>
 
         {/* Cards Grid - with overflow handling */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full max-w-lg md:max-w-5xl mt-6 md:mt-8 flex-shrink-0 mb-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 w-full max-w-lg md:max-w-7xl mt-6 md:mt-8 flex-shrink-0 mb-auto">
           {TOOLS.map((tool) => (
             <ToolCard 
               key={tool.id} 

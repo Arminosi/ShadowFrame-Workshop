@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToolData } from './types';
-import { GifIcon, CollageIcon, SliceIcon } from './components/Icons';
+import { GifIcon, CollageIcon, SliceIcon, ImageEditIcon } from './components/Icons';
 
 export const TOOLS: ToolData[] = [
   {
@@ -74,5 +74,29 @@ export const TOOLS: ToolData[] = [
     titleGradient: 'from-emerald-300 via-green-300 to-emerald-300',
     glowColor: 'rgba(52, 211, 153, 0.15)', // Emerald
     activeStyles: '!border-emerald-500 bg-gradient-to-r from-emerald-500/10 via-emerald-500/20 to-emerald-500/10 bg-[length:200%_100%] animate-flow-gradient shadow-[0_0_20px_rgba(52,211,153,0.3)]',
+  },
+  {
+    id: 'pconverter',
+    name: {
+      en: 'PConverter',
+      zh: 'PConverter 改图工匠'
+    },
+    category: {
+      en: 'Edit',
+      zh: '改图'
+    },
+    description: {
+      en: 'Professional image editing tool with cropping, rotation, watermark, and smart export with format conversion.',
+      zh: '专业图片编辑工具，支持裁切、旋转、水印添加和智能导出，轻松实现格式转换和压缩'
+    },
+    url: 'https://pc.qwq.team',
+    icon: <ImageEditIcon className="w-16 h-16" />,
+    color: 'text-amber-400',
+    bgHover: 'group-hover:bg-amber-500/10',
+    border: 'group-hover:border-amber-500/50',
+    gradient: 'from-amber-500 to-orange-600',
+    titleGradient: 'from-amber-300 via-orange-300 to-amber-300',
+    glowColor: 'rgba(251, 191, 36, 0.15)', // Amber
+    activeStyles: '!border-amber-500 bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 bg-[length:200%_100%] animate-flow-gradient shadow-[0_0_20px_rgba(251,191,36,0.3)]',
   },
 ];
