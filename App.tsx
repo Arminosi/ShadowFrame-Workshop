@@ -8,7 +8,7 @@ import InteractiveBackground from './components/InteractiveBackground';
 const UI_TEXT = {
   en: {
     badge: 'Creation Suite',
-    title: 'ChartMaster',
+    title: 'PicMaster',
     subtitle: 'A free and powerful toolkit for GIFs, collages, and slicing.',
     footer: 'Author: Arminosi',
   },
@@ -107,7 +107,7 @@ const App: React.FC = () => {
       setLang('en');
     }
     // Ensure the page tab always shows the bilingual title requested
-    document.title = '制图匠 | ChartMaster';
+    document.title = '制图匠 | PicMaster';
   }, []);
 
   const text = UI_TEXT[lang];
