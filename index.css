@@ -17,7 +17,7 @@
 
 /* Ensure base body background/text matches theme if not already set */
 html,body{
-  min-height:100vh;
+  min-height:100dvh; /* 使用动态视口高度 */
   width:100%;
   margin:0;
   padding:0;
@@ -28,7 +28,7 @@ html,body{
 }
 
 #root {
-  min-height: 100vh;
+  min-height: 100dvh; /* 使用动态视口高度 */
   width: 100%;
   display: flex;
   flex-direction: column;

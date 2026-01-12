@@ -113,7 +113,7 @@ const App: React.FC = () => {
   const text = UI_TEXT[lang];
 
   return (
-    <div className="min-h-screen h-full w-full bg-slate-950 text-slate-200 selection:bg-indigo-500/30 font-sans overflow-auto flex flex-col">
+    <div className="min-h-[100dvh] h-full w-full bg-slate-950 text-slate-200 selection:bg-indigo-500/30 font-sans overflow-auto flex flex-col" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
       
       {/* Interactive Particle Background */}
       <InteractiveBackground hoveredToolId={hoveredToolId} />
@@ -154,7 +154,7 @@ const App: React.FC = () => {
         </button>
       </div>
 
-      <main className="relative z-10 flex flex-col items-center justify-between w-full px-4 md:px-6 lg:px-8 py-6 md:py-8 min-h-screen">
+      <main className="relative z-10 flex flex-col items-center justify-between w-full px-4 md:px-6 lg:px-8 py-6 md:py-8 min-h-[100dvh]">
         
         {/* Spacer to push content down slightly */}
         <div className="flex-shrink-0 h-[2vh] md:h-[4vh]"></div>
@@ -190,7 +190,7 @@ const App: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <footer className="text-slate-600 text-xs md:text-sm font-medium pb-4 md:pb-6 flex-shrink-0">
+        <footer className="text-slate-600 text-xs md:text-sm font-medium pb-6 md:pb-8 flex-shrink-0" style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}>
           <div className="flex items-center justify-center">
             <span key={lang} className="animate-fade-in inline-block">
               {text.footer}
