@@ -8,13 +8,13 @@ import InteractiveBackground from './components/InteractiveBackground';
 const UI_TEXT = {
   en: {
     badge: 'Creation Suite',
-    title: 'ShadowFrame Workshop',
+    title: 'ChartMaster',
     subtitle: 'A free and powerful toolkit for GIFs, collages, and slicing.',
     footer: 'Author: Arminosi',
   },
   zh: {
     badge: '造图套件',
-    title: '影格工坊',
+    title: '制图匠',
     subtitle: '一组用于动图、拼图、切图的免费而又强大的工具包',
     footer: '作者: Arminosi',
   }
@@ -107,7 +107,7 @@ const App: React.FC = () => {
       setLang('en');
     }
     // Ensure the page tab always shows the bilingual title requested
-    document.title = '影格工坊 | ShadowFrame Workshop';
+    document.title = '制图匠 | ChartMaster';
   }, []);
 
   const text = UI_TEXT[lang];

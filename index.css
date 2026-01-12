@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global style overrides and themed scrollbar for ShadowFrame Workshop */
+/* Global style overrides and themed scrollbar for ChartMaster */
 :root{
   --sf-bg:#020617;
   --sf-foreground: #f8fafc; /* body text color used in index.html */
