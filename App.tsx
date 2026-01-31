@@ -165,90 +165,7 @@ const App: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-transparent to-slate-950/50"></div>
       </div>
 
-      {/* Top Right Controls */}
-      <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex items-center gap-2">
-        {/* Source Switcher */}
-        <div className="relative flex items-center p-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full shadow-lg overflow-hidden">
-          {/* The Sliding Background Pill - hidden during checking and result display */}
-          <div
-            className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-emerald-500/90 rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${(isCheckingSource || checkResult) ? 'opacity-0' : 'opacity-100'
-              } ${source === 'github' ? 'translate-x-[100%] left-1' : 'translate-x-0 left-1'}`}
-          />
 
-          {/* Checking State Overlay */}
-          {(isCheckingSource || checkResult) && (
-            <div className="absolute inset-0 flex items-center justify-center bg-slate-900/80 z-20">
-              <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold">
-                {isCheckingSource ? (
-                  <>
-                    <div className="w-3 h-3 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
-                    <span className="text-slate-400">{lang === 'en' ? 'Checking...' : '检测中...'}</span>
-                  </>
-                ) : checkResult === 'success' ? (
-                  <>
-                    <span className="text-emerald-400">✓</span>
-                    <span className="text-emerald-400">{lang === 'en' ? 'Main OK' : '主线可用'}</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-amber-400">!</span>
-                    <span className="text-amber-400">{lang === 'en' ? 'Use GitHub' : '使用备用'}</span>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* Main Option */}
-          <button
-            onClick={() => setSource('main')}
-            disabled={isCheckingSource || checkResult !== null}
-            className={`relative z-10 w-14 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-all duration-300 text-center ${(isCheckingSource || checkResult) ? 'opacity-0' : 'opacity-100'
-              } ${source === 'main' ? 'text-white' : 'text-slate-500 hover:text-slate-300'}`}
-            title={lang === 'en' ? 'Main Server' : '主线服务器'}
-          >
-            {lang === 'en' ? 'Main' : '主线'}
-          </button>
-
-          {/* GitHub Option */}
-          <button
-            onClick={() => setSource('github')}
-            disabled={isCheckingSource || checkResult !== null}
-            className={`relative z-10 w-14 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-all duration-300 text-center ${(isCheckingSource || checkResult) ? 'opacity-0' : 'opacity-100'
-              } ${source === 'github' ? 'text-white' : 'text-slate-500 hover:text-slate-300'}`}
-            title="GitHub Pages"
-          >
-            GitHub
-          </button>
-        </div>
-
-        {/* Animated Language Switcher */}
-        <div className="relative flex items-center p-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full shadow-lg">
-          {/* The Sliding Background Pill */}
-          <div
-            className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-indigo-500/90 rounded-full shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${lang === 'zh' ? 'translate-x-[100%] left-1' : 'translate-x-0 left-1'
-              }`}
-          />
-
-          {/* EN Option */}
-          <button
-            onClick={() => setLang('en')}
-            className={`relative z-10 w-12 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-colors duration-300 ${lang === 'en' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
-              }`}
-          >
-            EN
-          </button>
-
-          {/* ZH Option */}
-          <button
-            onClick={() => setLang('zh')}
-            className={`relative z-10 w-12 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-colors duration-300 ${lang === 'zh' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
-              }`}
-          >
-            中文
-          </button>
-        </div>
-      </div>
 
       <main className="relative z-10 flex flex-col items-center justify-between w-full px-4 md:px-6 lg:px-8 py-6 md:py-8 min-h-[100dvh]">
 
@@ -274,7 +191,7 @@ const App: React.FC = () => {
         </header>
 
         {/* Cards Grid - with overflow handling */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 w-full max-w-lg md:max-w-[90rem] mt-6 md:mt-8 flex-shrink-0 mb-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 md:gap-6 w-full max-w-lg md:max-w-[90rem] mt-10 md:mt-16 mb-10 md:mb-16 flex-shrink-0">
           {TOOLS.map((tool) => (
             <ToolCard
               key={tool.id}
@@ -288,7 +205,93 @@ const App: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <footer className="text-slate-600 text-xs md:text-sm font-medium pb-6 md:pb-8 flex-shrink-0" style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+        <footer className="w-full text-slate-600 text-xs md:text-sm font-medium pb-6 md:pb-8 flex-shrink-0 flex flex-col items-center gap-6" style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+
+          {/* Controls Row */}
+          <div className="flex flex-row items-center gap-3 md:gap-6 scale-90 md:scale-100 origin-bottom">
+            {/* Source Switcher */}
+            <div className="relative flex items-center p-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full shadow-lg overflow-hidden">
+              {/* The Sliding Background Pill - hidden during checking and result display */}
+              <div
+                className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-emerald-500/90 rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${(isCheckingSource || checkResult) ? 'opacity-0' : 'opacity-100'
+                  } ${source === 'github' ? 'translate-x-[100%] left-1' : 'translate-x-0 left-1'}`}
+              />
+
+              {/* Checking State Overlay */}
+              {(isCheckingSource || checkResult) && (
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-900/80 z-20">
+                  <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold">
+                    {isCheckingSource ? (
+                      <>
+                        <div className="w-3 h-3 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
+                        <span className="text-slate-400">{lang === 'en' ? 'Checking...' : '检测中...'}</span>
+                      </>
+                    ) : checkResult === 'success' ? (
+                      <>
+                        <span className="text-emerald-400">✓</span>
+                        <span className="text-emerald-400">{lang === 'en' ? 'Main OK' : '主线可用'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-amber-400">!</span>
+                        <span className="text-amber-400">{lang === 'en' ? 'Use GitHub' : '使用备用'}</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Main Option */}
+              <button
+                onClick={() => setSource('main')}
+                disabled={isCheckingSource || checkResult !== null}
+                className={`relative z-10 w-14 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-all duration-300 text-center ${(isCheckingSource || checkResult) ? 'opacity-0' : 'opacity-100'
+                  } ${source === 'main' ? 'text-white' : 'text-slate-500 hover:text-slate-300'}`}
+                title={lang === 'en' ? 'Main Server' : '主线服务器'}
+              >
+                {lang === 'en' ? 'Main' : '主线'}
+              </button>
+
+              {/* GitHub Option */}
+              <button
+                onClick={() => setSource('github')}
+                disabled={isCheckingSource || checkResult !== null}
+                className={`relative z-10 w-14 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-all duration-300 text-center ${(isCheckingSource || checkResult) ? 'opacity-0' : 'opacity-100'
+                  } ${source === 'github' ? 'text-white' : 'text-slate-500 hover:text-slate-300'}`}
+                title="GitHub Pages"
+              >
+                GitHub
+              </button>
+            </div>
+
+            {/* Language Switcher */}
+            <div className="relative flex items-center p-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full shadow-lg">
+              {/* The Sliding Background Pill */}
+              <div
+                className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-indigo-500/90 rounded-full shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${lang === 'zh' ? 'translate-x-[100%] left-1' : 'translate-x-0 left-1'
+                  }`}
+              />
+
+              {/* EN Option */}
+              <button
+                onClick={() => setLang('en')}
+                className={`relative z-10 w-12 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-colors duration-300 ${lang === 'en' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                  }`}
+              >
+                EN
+              </button>
+
+              {/* ZH Option */}
+              <button
+                onClick={() => setLang('zh')}
+                className={`relative z-10 w-12 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-colors duration-300 ${lang === 'zh' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                  }`}
+              >
+                中文
+              </button>
+            </div>
+          </div>
+
           <div className="flex items-center justify-center">
             <span key={lang} className="animate-fade-in inline-block">
               {text.footer}
