@@ -261,6 +261,66 @@ export const ImageEditIcon: React.FC<IconProps> = ({ className }) => (
   </svg>
 );
 
+export const CompressIcon: React.FC<IconProps> = ({ className }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="1.5" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    {/* 
+        Compress Animation:
+        Default state: A full-size image block.
+        Hover state: Arrows press inward, the block shrinks, showing compression effect.
+    */}
+
+    {/* Central Block - shrinks on hover */}
+    <rect 
+      x="7" y="7" width="10" height="10" rx="2"
+      className="fill-current opacity-60 transition-all duration-500 cubic-bezier(0.34, 1.56, 0.64, 1) origin-center
+                 group-hover:scale-75 group-hover:opacity-100"
+      style={{ transformBox: 'fill-box' }}
+    />
+
+    {/* Compression Arrows - appear and move inward on hover */}
+    {/* Top Arrow */}
+    <path 
+      d="M12 2v4M9 4l3 2 3-2" 
+      className="opacity-0 translate-y-1 group-hover:opacity-80 group-hover:translate-y-0 transition-all duration-500"
+    />
+    
+    {/* Bottom Arrow */}
+    <path 
+      d="M12 22v-4M9 20l3-2 3 2" 
+      className="opacity-0 -translate-y-1 group-hover:opacity-80 group-hover:translate-y-0 transition-all duration-500"
+    />
+    
+    {/* Left Arrow */}
+    <path 
+      d="M2 12h4M4 9l2 3-2 3" 
+      className="opacity-0 translate-x-1 group-hover:opacity-80 group-hover:translate-x-0 transition-all duration-500"
+    />
+    
+    {/* Right Arrow */}
+    <path 
+      d="M22 12h-4M20 9l-2 3 2 3" 
+      className="opacity-0 -translate-x-1 group-hover:opacity-80 group-hover:translate-x-0 transition-all duration-500"
+    />
+
+    {/* Corner hints - subtle decorations */}
+    <g className="opacity-20 group-hover:opacity-40 transition-opacity duration-500">
+      <path d="M5 5L7 7" />
+      <path d="M19 5L17 7" />
+      <path d="M5 19L7 17" />
+      <path d="M19 19L17 17" />
+    </g>
+  </svg>
+);
+
 export const GithubIcon: React.FC<IconProps> = ({ className }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 

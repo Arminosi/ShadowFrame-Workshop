@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 export type Language = 'en' | 'zh';
+export type Source = 'main' | 'github';
 
 export interface LocalizedString {
   en: string;

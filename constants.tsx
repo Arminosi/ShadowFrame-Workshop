@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToolData } from './types';
-import { GifIcon, CollageIcon, SliceIcon, ImageEditIcon } from './components/Icons';
+import { GifIcon, CollageIcon, SliceIcon, ImageEditIcon, CompressIcon } from './components/Icons';
 
 export const TOOLS: ToolData[] = [
   {
@@ -25,7 +25,7 @@ export const TOOLS: ToolData[] = [
     gradient: 'from-fuchsia-600 to-purple-600',
     titleGradient: 'from-fuchsia-300 via-purple-300 to-fuchsia-300',
     glowColor: 'rgba(232, 121, 249, 0.15)', // Fuchsia
-    activeStyles: '!border-fuchsia-500 bg-gradient-to-r from-fuchsia-500/10 via-fuchsia-500/20 to-fuchsia-500/10 bg-[length:200%_100%] animate-flow-gradient shadow-[0_0_20px_rgba(232,121,249,0.3)]',
+    activeStyles: '!border-fuchsia-500 shadow-[0_0_20px_rgba(232,121,249,0.3)]',
   },
   {
     id: 'collagepro',
@@ -49,7 +49,7 @@ export const TOOLS: ToolData[] = [
     gradient: 'from-cyan-500 to-blue-600',
     titleGradient: 'from-cyan-300 via-blue-300 to-cyan-300',
     glowColor: 'rgba(34, 211, 238, 0.15)', // Cyan
-    activeStyles: '!border-cyan-500 bg-gradient-to-r from-cyan-500/10 via-cyan-500/20 to-cyan-500/10 bg-[length:200%_100%] animate-flow-gradient shadow-[0_0_20px_rgba(34,211,238,0.3)]',
+    activeStyles: '!border-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.3)]',
   },
   {
     id: 'spriteslicer',
@@ -73,7 +73,7 @@ export const TOOLS: ToolData[] = [
     gradient: 'from-emerald-500 to-green-600',
     titleGradient: 'from-emerald-300 via-green-300 to-emerald-300',
     glowColor: 'rgba(52, 211, 153, 0.15)', // Emerald
-    activeStyles: '!border-emerald-500 bg-gradient-to-r from-emerald-500/10 via-emerald-500/20 to-emerald-500/10 bg-[length:200%_100%] animate-flow-gradient shadow-[0_0_20px_rgba(52,211,153,0.3)]',
+    activeStyles: '!border-emerald-500 shadow-[0_0_20px_rgba(52,211,153,0.3)]',
   },
   {
     id: 'pconverter',
@@ -97,6 +97,39 @@ export const TOOLS: ToolData[] = [
     gradient: 'from-amber-500 to-orange-600',
     titleGradient: 'from-amber-300 via-orange-300 to-amber-300',
     glowColor: 'rgba(251, 191, 36, 0.15)', // Amber
-    activeStyles: '!border-amber-500 bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 bg-[length:200%_100%] animate-flow-gradient shadow-[0_0_20px_rgba(251,191,36,0.3)]',
+    activeStyles: '!border-amber-500 shadow-[0_0_20px_rgba(251,191,36,0.3)]',
+  },
+  {
+    id: 'tinypng',
+    name: {
+      en: 'TinyPNG',
+      zh: '压图 TinyPNG'
+    },
+    category: {
+      en: 'Compress',
+      zh: '压图'
+    },
+    description: {
+      en: 'Compress PNG images with smart lossy compression to reduce file size while maintaining quality.',
+      zh: '智能有损压缩 PNG 图片，在保持画质的同时大幅减小文件体积'
+    },
+    url: 'https://tp.qwq.team',
+    icon: <CompressIcon className="w-16 h-16" />,
+    color: 'text-rose-400',
+    bgHover: 'group-hover:bg-rose-500/10',
+    border: 'group-hover:border-rose-500/50',
+    gradient: 'from-rose-500 to-pink-600',
+    titleGradient: 'from-rose-300 via-pink-300 to-rose-300',
+    glowColor: 'rgba(251, 113, 133, 0.15)', // Rose
+    activeStyles: '!border-rose-500 shadow-[0_0_20px_rgba(251,113,133,0.3)]',
   },
 ];
+
+// GitHub Pages URL mapping for each tool
+export const GITHUB_URLS: Record<string, string> = {
+  gifbuilder: 'https://arminosi.github.io/GifBuilder',
+  collagepro: 'https://arminosi.github.io/CollagePro',
+  spriteslicer: 'https://arminosi.github.io/SpriteSlicer',
+  pconverter: 'https://arminosi.github.io/PConverter',
+  tinypng: 'https://arminosi.github.io/TinyPNGWeb',
+};
