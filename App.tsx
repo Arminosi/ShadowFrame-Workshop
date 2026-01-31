@@ -94,22 +94,27 @@ const GradientTitle = ({ text, lang, hoveredToolId }: { text: string, lang: stri
 };
 
 const App: React.FC = () => {
-  const [lang, setLang] = useState<Language>('en');
-  const [source, setSource] = useState<Source>('main');
+  const [lang, setLang] = useState<Language>(() => {
+    // Try to get saved language from localStorage
+    const savedLang = localStorage.getItem('picmaster-lang');
+    if (savedLang === 'en' || savedLang === 'zh') {
+      return savedLang;
+    }
+    // First visit: detect browser language
+    const browserLang = navigator.language.toLowerCase();
+    return browserLang.startsWith('zh') ? 'zh' : 'en';
+  });
+  const [source, setSource] = useState<Source>('github');
   const [hoveredToolId, setHoveredToolId] = useState<string | null>(null);
   const [isCheckingSource, setIsCheckingSource] = useState(true);
+  const [checkResult, setCheckResult] = useState<'success' | 'failed' | null>(null);
 
+  // Save language preference when it changes
   useEffect(() => {
-    // Simple language detection
-    const browserLang = navigator.language.toLowerCase();
-    if (browserLang.startsWith('zh')) {
-      setLang('zh');
-    } else {
-      setLang('en');
-    }
+    localStorage.setItem('picmaster-lang', lang);
     // Ensure the page tab always shows the bilingual title requested
     document.title = '制图匠 | PicMaster';
-  }, []);
+  }, [lang]);
 
   // Auto-detect if main source is accessible
   useEffect(() => {
@@ -119,7 +124,7 @@ const App: React.FC = () => {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-        const response = await fetch('https://gif.qwq.team', {
+        await fetch('https://gif.qwq.team', {
           method: 'HEAD',
           mode: 'no-cors', // Use no-cors to avoid CORS issues
           signal: controller.signal,
@@ -128,12 +133,18 @@ const App: React.FC = () => {
         clearTimeout(timeoutId);
         // If we get here without error, main source is accessible
         setSource('main');
+        setCheckResult('success');
       } catch (error) {
         // Main source is not accessible, switch to GitHub
         console.log('Main source not accessible, switching to GitHub');
         setSource('github');
+        setCheckResult('failed');
       } finally {
         setIsCheckingSource(false);
+        // Hide result after 1.5 seconds
+        setTimeout(() => {
+          setCheckResult(null);
+        }, 1500);
       }
     };
 
@@ -158,18 +169,32 @@ const App: React.FC = () => {
       <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex items-center gap-2">
         {/* Source Switcher */}
         <div className="relative flex items-center p-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full shadow-lg overflow-hidden">
-          {/* The Sliding Background Pill - hidden during checking */}
+          {/* The Sliding Background Pill - hidden during checking and result display */}
           <div
-            className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-emerald-500/90 rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${isCheckingSource ? 'opacity-0' : 'opacity-100'
+            className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-emerald-500/90 rounded-full shadow-sm transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${(isCheckingSource || checkResult) ? 'opacity-0' : 'opacity-100'
               } ${source === 'github' ? 'translate-x-[100%] left-1' : 'translate-x-0 left-1'}`}
           />
 
           {/* Checking State Overlay */}
-          {isCheckingSource && (
+          {(isCheckingSource || checkResult) && (
             <div className="absolute inset-0 flex items-center justify-center bg-slate-900/80 z-20">
-              <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-slate-400">
-                <div className="w-3 h-3 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
-                <span>{lang === 'en' ? 'Checking...' : '检测中...'}</span>
+              <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold">
+                {isCheckingSource ? (
+                  <>
+                    <div className="w-3 h-3 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
+                    <span className="text-slate-400">{lang === 'en' ? 'Checking...' : '检测中...'}</span>
+                  </>
+                ) : checkResult === 'success' ? (
+                  <>
+                    <span className="text-emerald-400">✓</span>
+                    <span className="text-emerald-400">{lang === 'en' ? 'Main OK' : '主线可用'}</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-amber-400">!</span>
+                    <span className="text-amber-400">{lang === 'en' ? 'Use GitHub' : '使用备用'}</span>
+                  </>
+                )}
               </div>
             </div>
           )}
@@ -177,8 +202,8 @@ const App: React.FC = () => {
           {/* Main Option */}
           <button
             onClick={() => setSource('main')}
-            disabled={isCheckingSource}
-            className={`relative z-10 w-14 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-all duration-300 text-center ${isCheckingSource ? 'opacity-0' : 'opacity-100'
+            disabled={isCheckingSource || checkResult !== null}
+            className={`relative z-10 w-14 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-all duration-300 text-center ${(isCheckingSource || checkResult) ? 'opacity-0' : 'opacity-100'
               } ${source === 'main' ? 'text-white' : 'text-slate-500 hover:text-slate-300'}`}
             title={lang === 'en' ? 'Main Server' : '主线服务器'}
           >
@@ -188,8 +213,8 @@ const App: React.FC = () => {
           {/* GitHub Option */}
           <button
             onClick={() => setSource('github')}
-            disabled={isCheckingSource}
-            className={`relative z-10 w-14 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-all duration-300 text-center ${isCheckingSource ? 'opacity-0' : 'opacity-100'
+            disabled={isCheckingSource || checkResult !== null}
+            className={`relative z-10 w-14 py-1.5 text-[10px] md:text-xs font-bold tracking-wider rounded-full transition-all duration-300 text-center ${(isCheckingSource || checkResult) ? 'opacity-0' : 'opacity-100'
               } ${source === 'github' ? 'text-white' : 'text-slate-500 hover:text-slate-300'}`}
             title="GitHub Pages"
           >

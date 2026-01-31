@@ -19,13 +19,13 @@ export const TOOLS: ToolData[] = [
     },
     url: 'https://gif.qwq.team',
     icon: <GifIcon className="w-16 h-16" />,
-    color: 'text-fuchsia-400',
-    bgHover: 'group-hover:bg-fuchsia-500/10',
-    border: 'group-hover:border-fuchsia-500/50',
-    gradient: 'from-fuchsia-600 to-purple-600',
-    titleGradient: 'from-fuchsia-300 via-purple-300 to-fuchsia-300',
-    glowColor: 'rgba(232, 121, 249, 0.15)', // Fuchsia
-    activeStyles: '!border-fuchsia-500 shadow-[0_0_20px_rgba(232,121,249,0.3)]',
+    color: 'text-violet-400',
+    bgHover: 'group-hover:bg-violet-500/10',
+    border: 'group-hover:border-violet-500/50',
+    gradient: 'from-violet-500 to-indigo-600',
+    titleGradient: 'from-violet-300 via-indigo-300 to-violet-300',
+    glowColor: 'rgba(139, 92, 246, 0.15)', // Violet
+    activeStyles: '!border-violet-500 shadow-[0_0_20px_rgba(139,92,246,0.3)]',
   },
   {
     id: 'collagepro',
@@ -103,7 +103,7 @@ export const TOOLS: ToolData[] = [
     id: 'tinypng',
     name: {
       en: 'TinyPNG',
-      zh: '压图 TinyPNG'
+      zh: 'TinyPNG 压图师'
     },
     category: {
       en: 'Compress',
